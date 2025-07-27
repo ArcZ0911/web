@@ -3,189 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel ArcZ</title>
+  <title>ArcZ Panel</title>
   <style>
     * {
       box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: sans-serif;
       margin: 0;
       padding: 0;
     }
 
     body {
-      background: linear-gradient(135deg, #141e30, #243b55);
+      background: #121212;
       color: white;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       padding: 20px;
+      min-height: 100vh;
     }
 
     h1 {
-      margin-bottom: 20px;
       text-align: center;
+      margin-bottom: 20px;
     }
 
     .panel-buttons {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 15px;
+      justify-content: center;
     }
 
     .panel-buttons button {
-      padding: 12px 20px;
-      border-radius: 12px;
-      border: none;
-      background-color: #ffffff22;
+      background-color: #1f1f1f;
       color: white;
-      font-weight: bold;
+      border: none;
+      padding: 15px 20px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
       cursor: pointer;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-      transition: transform 0.2s, background 0.3s;
+      font-size: 16px;
+      transition: transform 0.2s ease, background-color 0.3s ease;
     }
 
     .panel-buttons button:hover {
-      transform: translateY(-3px);
-      background-color: #ffffff33;
+      background-color: #2b2b2b;
+      transform: scale(1.05);
     }
 
+    /* Overlay */
     .overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-color: rgba(0, 0, 0, 0.6);
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(5px);
       display: none;
-      justify-content: center;
       align-items: center;
-      z-index: 10;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .overlay.active {
+      display: flex;
     }
 
     .popup {
-      background-color: #2d2d2d;
-      border-radius: 15px;
+      background: #1a1a1a;
       padding: 20px;
+      border-radius: 15px;
       width: 90%;
-      max-width: 350px;
-      position: relative;
+      max-width: 400px;
       animation: slideDown 0.4s ease-out;
+      position: relative;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
     }
 
     @keyframes slideDown {
-      from {
-        transform: scale(0.7) translateY(-100px);
+      0% {
         opacity: 0;
+        transform: translateY(-100px) scale(0.8);
       }
-      to {
-        transform: scale(1) translateY(0);
+      100% {
         opacity: 1;
+        transform: translateY(0) scale(1);
       }
+    }
+
+    .popup h2 {
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    .popup p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 18px;
+      background-color: #00c853;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: center;
     }
 
     .close-btn {
       position: absolute;
       top: 10px;
       right: 15px;
-      font-size: 18px;
-      color: white;
       background: none;
       border: none;
+      color: white;
+      font-size: 20px;
       cursor: pointer;
     }
 
-    .popup h2 {
-      margin-bottom: 10px;
-      font-size: 22px;
-    }
-
-    .popup p {
-      margin: 5px 0;
-      font-size: 15px;
-    }
-
-    .buy-btn {
-      display: inline-block;
-      margin-top: 10px;
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .buy-btn:hover {
-      background-color: #45a049;
-    }
-
-    @media (max-width: 480px) {
+    @media screen and (max-width: 480px) {
       .popup {
-        width: 95%;
-        padding: 18px;
+        padding: 15px;
       }
 
-      .panel-buttons {
-        gap: 10px;
+      .buy-btn {
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
 </head>
 <body>
-
-  <h1>Panel ArcZ Hosting</h1>
+  <h1>ArcZ Panel Store</h1>
   <div class="panel-buttons">
-    <button onclick="showPopup(1)">Panel 1GB</button>
-    <button onclick="showPopup(2)">Panel 2GB</button>
-    <button onclick="showPopup(3)">Panel 3GB</button>
-    <button onclick="showPopup(4)">Panel 4GB</button>
-    <button onclick="showPopup(5)">Panel 5GB</button>
-    <button onclick="showPopup(6)">Panel 6GB</button>
-    <button onclick="showPopup(7)">Panel 7GB</button>
-    <button onclick="showPopup('unlimited')">Unlimited 💥</button>
+    <button onclick="showPopup('1GB', 'Rp10.000', '1GB', '5GB', '10%')">Panel 1GB</button>
+    <button onclick="showPopup('2GB', 'Rp15.000', '2GB', '10GB', '20%')">Panel 2GB</button>
+    <button onclick="showPopup('3GB', 'Rp20.000', '3GB', '15GB', '30%')">Panel 3GB</button>
+    <button onclick="showPopup('4GB', 'Rp25.000', '4GB', '20GB', '40%')">Panel 4GB</button>
+    <button onclick="showPopup('5GB', 'Rp30.000', '5GB', '25GB', '50%')">Panel 5GB</button>
+    <button onclick="showPopup('6GB', 'Rp35.000', '6GB', '30GB', '60%')">Panel 6GB</button>
+    <button onclick="showPopup('7GB', 'Rp40.000', '7GB', '35GB', '70%')">Panel 7GB</button>
+    <button onclick="showPopup('Unlimited', 'Rp50.000', '∞', '∞', '100%')">Unlimited 💥</button>
   </div>
 
+  <!-- Overlay Popup -->
   <div class="overlay" id="overlay">
-    <div class="popup" id="popup">
-      <button class="close-btn" onclick="hidePopup()">❌</button>
-      <h2 id="panel-title"></h2>
+    <div class="popup">
+      <button class="close-btn" onclick="closePopup()">×</button>
+      <h2 id="popup-title">Panel</h2>
       <p><strong>Harga:</strong> <span id="harga"></span></p>
       <p><strong>RAM:</strong> <span id="ram"></span></p>
       <p><strong>Disk:</strong> <span id="disk"></span></p>
       <p><strong>CPU:</strong> <span id="cpu"></span></p>
-      <a href="https://wa.me/6289523042979" class="buy-btn">Buy Panel</a>
+      <a href="https://wa.me/6289523042979" class="buy-btn" target="_blank">Buy Panel</a>
     </div>
   </div>
 
   <script>
-    const data = {
-      1: { ram: "1GB", disk: "5GB", cpu: "10%", harga: "Rp10.000" },
-      2: { ram: "2GB", disk: "10GB", cpu: "20%", harga: "Rp20.000" },
-      3: { ram: "3GB", disk: "15GB", cpu: "30%", harga: "Rp30.000" },
-      4: { ram: "4GB", disk: "20GB", cpu: "40%", harga: "Rp40.000" },
-      5: { ram: "5GB", disk: "25GB", cpu: "50%", harga: "Rp50.000" },
-      6: { ram: "6GB", disk: "30GB", cpu: "60%", harga: "Rp60.000" },
-      7: { ram: "7GB", disk: "35GB", cpu: "70%", harga: "Rp70.000" },
-      unlimited: { ram: "Unlimited", disk: "Unlimited", cpu: "100%", harga: "Rp150.000" },
-    };
-
-    function showPopup(id) {
-      const panel = data[id];
-      document.getElementById("panel-title").textContent = `Panel ${id === "unlimited" ? "Unlimited 💥" : id + "GB"}`;
-      document.getElementById("ram").textContent = panel.ram;
-      document.getElementById("disk").textContent = panel.disk;
-      document.getElementById("cpu").textContent = panel.cpu;
-      document.getElementById("harga").textContent = panel.harga;
-      document.getElementById("overlay").style.display = "flex";
+    function showPopup(title, harga, ram, disk, cpu) {
+      document.getElementById('popup-title').textContent = `Panel ${title}`;
+      document.getElementById('harga').textContent = harga;
+      document.getElementById('ram').textContent = ram;
+      document.getElementById('disk').textContent = disk;
+      document.getElementById('cpu').textContent = cpu;
+      document.getElementById('overlay').classList.add('active');
     }
 
-    function hidePopup() {
-      document.getElementById("overlay").style.display = "none";
+    function closePopup() {
+      document.getElementById('overlay').classList.remove('active');
     }
   </script>
-
 </body>
 </html>
