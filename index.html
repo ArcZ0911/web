@@ -1,183 +1,195 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ArcZ Panel Store</title>
   <style>
     body {
       margin: 0;
       font-family: sans-serif;
-      background: #111;
+      background: #121212;
       color: white;
-      text-align: center;
     }
 
     header {
+      background: #1f1f1f;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: left;
       position: sticky;
       top: 0;
-      background: #1a1a1a;
-      padding: 15px;
-      font-size: 24px;
-      font-weight: bold;
       z-index: 2;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
-    .button-list {
+    .container {
+      padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      padding: 20px;
+      gap: 10px;
     }
 
-    .panel-btn {
-      background: #222;
-      border: 2px solid #444;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 18px;
+    .panel-button {
+      background: #2a2a2a;
       color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      text-align: left;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: 0.3s;
+      gap: 0.5rem;
+      justify-content: flex-start;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
     }
 
-    .panel-btn:hover {
+    .panel-button:hover {
       background: #333;
-      transform: scale(1.03);
+      transform: scale(1.01);
     }
 
-    .panel-btn img {
-      width: 24px;
-      height: 24px;
-    }
-
-    .popup-bg {
+    .overlay {
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(5px);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 99;
-      display: none;
+      z-index: 10;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      visibility: visible;
+      opacity: 1;
     }
 
     .popup {
-      background: #222;
-      padding: 20px;
+      background: #1e1e1e;
       border-radius: 15px;
+      padding: 2rem;
       width: 90%;
       max-width: 400px;
-      animation: slideDown 0.4s ease;
-      position: relative;
+      transform: scale(0.5);
+      animation: popupIn 0.3s forwards;
     }
 
-    @keyframes slideDown {
-      0% {
-        opacity: 0;
-        transform: translateY(-30px) scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+    @keyframes popupIn {
+      to {
+        transform: scale(1);
       }
     }
 
-    .popup .close {
+    .popup h2 {
+      margin-top: 0;
+    }
+
+    .close-btn {
       position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 22px;
-      cursor: pointer;
-    }
-
-    .popup h3 {
-      margin-top: 10px;
-    }
-
-    .popup p {
-      margin: 8px 0;
-    }
-
-    .buy-btn {
-      background: #0f0;
-      padding: 10px 20px;
+      top: 15px;
+      right: 20px;
+      background: #ff4b4b;
+      color: white;
       border: none;
-      color: black;
-      font-weight: bold;
-      border-radius: 8px;
+      padding: 0.5rem;
+      border-radius: 50%;
+      font-size: 1rem;
       cursor: pointer;
-      margin-top: 15px;
+      z-index: 20;
     }
 
+    .buy-button {
+      background: #00c853;
+      color: white;
+      padding: 0.8rem;
+      border: none;
+      width: 100%;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
   <header>🤖 ArcZ Panel Store</header>
 
-  <div class="button-list" id="buttonList">
-    <!-- Buttons will be inserted by JavaScript -->
+  <div class="container">
+    <button class="panel-button" data-command="1gb">🤖 Panel 1GB</button>
+    <button class="panel-button" data-command="2gb">🤖 Panel 2GB</button>
+    <button class="panel-button" data-command="3gb">🤖 Panel 3GB</button>
+    <button class="panel-button" data-command="4gb">🤖 Panel 4GB</button>
+    <button class="panel-button" data-command="5gb">🤖 Panel 5GB</button>
+    <button class="panel-button" data-command="6gb">🤖 Panel 6GB</button>
+    <button class="panel-button" data-command="7gb">🤖 Panel 7GB</button>
+    <button class="panel-button" data-command="8gb">🤖 Panel 8GB</button>
+    <button class="panel-button" data-command="9gb">🤖 Panel 9GB</button>
+    <button class="panel-button" data-command="10gb">🤖 Panel 10GB</button>
+    <button class="panel-button" data-command="unlimited">🤖 Panel Unlimited</button>
   </div>
 
-  <div class="popup-bg" id="popupBg">
-    <div class="popup">
-      <div class="close" onclick="closePopup()">✖</div>
-      <h3 id="panelTitle">Panel Info</h3>
-      <p id="panelRAM">RAM: </p>
-      <p id="panelDisk">Disk: </p>
-      <p id="panelCPU">CPU: </p>
-      <p id="panelHarga">Harga: </p>
-      <button class="buy-btn">Buy Panel</button>
+  <div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+      <h2 id="popupTitle">Panel</h2>
+      <p><strong>RAM:</strong> <span id="popupRam"></span> MB</p>
+      <p><strong>Disk:</strong> <span id="popupDisk"></span> MB</p>
+      <p><strong>CPU:</strong> <span id="popupCpu"></span>%</p>
+      <p><strong>Harga:</strong> <span id="popupPrice"></span></p>
+      <button class="buy-button">Buy Panel</button>
     </div>
+    <button class="close-btn" onclick="closePopup()">✕</button>
   </div>
 
   <script>
-    const panelData = {
-      "1gb": { ram: 1024, disk: 1024, cpu: 30, harga: "2K" },
-      "2gb": { ram: 2048, disk: 2048, cpu: 50, harga: "3K" },
-      "3gb": { ram: 3072, disk: 3072, cpu: 70, harga: "4K" },
-      "4gb": { ram: 4096, disk: 4096, cpu: 90, harga: "5K" },
-      "5gb": { ram: 5120, disk: 5120, cpu: 110, harga: "6K" },
-      "6gb": { ram: 6144, disk: 6144, cpu: 125, harga: "7K" },
-      "7gb": { ram: 7168, disk: 7168, cpu: 150, harga: "8K" },
-      "8gb": { ram: 8192, disk: 8192, cpu: 170, harga: "9K" },
-      "9gb": { ram: 9216, disk: 9216, cpu: 180, harga: "10K" },
-      "10gb": { ram: 10240, disk: 10240, cpu: 200, harga: "11K" },
-      "unlimited": { ram: "∞", disk: "∞", cpu: "∞", harga: "15K" }
-    };
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
 
-    const buttonList = document.getElementById("buttonList");
-    const popupBg = document.getElementById("popupBg");
+    const popupRam = document.getElementById('popupRam');
+    const popupDisk = document.getElementById('popupDisk');
+    const popupCpu = document.getElementById('popupCpu');
+    const popupPrice = document.getElementById('popupPrice');
+    const popupTitle = document.getElementById('popupTitle');
 
-    Object.keys(panelData).forEach(key => {
-      const btn = document.createElement("button");
-      btn.className = "panel-btn";
-      btn.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/4712/4712103.png" alt="🤖"> Panel ${key.toUpperCase()}`;
-      btn.onclick = () => showPopup(key);
-      buttonList.appendChild(btn);
+    document.querySelectorAll('.panel-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const command = button.dataset.command;
+        let ram = "0", disknya = "0", cpu = "0", harga = "-";
+
+        if (command === "1gb") { ram = "1024"; disknya = "1024"; cpu = "30"; harga = "2K"; }
+        else if (command === "2gb") { ram = "2048"; disknya = "2048"; cpu = "50"; harga = "3K"; }
+        else if (command === "3gb") { ram = "3072"; disknya = "3072"; cpu = "70"; harga = "4K"; }
+        else if (command === "4gb") { ram = "4096"; disknya = "4096"; cpu = "90"; harga = "5K"; }
+        else if (command === "5gb") { ram = "5120"; disknya = "5120"; cpu = "110"; harga = "6K"; }
+        else if (command === "6gb") { ram = "6144"; disknya = "6144"; cpu = "125"; harga = "7K"; }
+        else if (command === "7gb") { ram = "7168"; disknya = "7168"; cpu = "150"; harga = "8K"; }
+        else if (command === "8gb") { ram = "8192"; disknya = "8192"; cpu = "170"; harga = "9K"; }
+        else if (command === "9gb") { ram = "9216"; disknya = "9216"; cpu = "180"; harga = "10K"; }
+        else if (command === "10gb") { ram = "10240"; disknya = "10240"; cpu = "200"; harga = "11K"; }
+        else if (command === "unlimited") { ram = "∞"; disknya = "∞"; cpu = "∞"; harga = "15K"; }
+
+        popupTitle.textContent = `Panel ${command.toUpperCase()}`;
+        popupRam.textContent = ram;
+        popupDisk.textContent = disknya;
+        popupCpu.textContent = cpu;
+        popupPrice.textContent = harga;
+
+        overlay.classList.add("active");
+      });
     });
 
-    function showPopup(type) {
-      const data = panelData[type];
-      document.getElementById("panelTitle").innerText = `Panel ${type.toUpperCase()}`;
-      document.getElementById("panelRAM").innerText = `💾 RAM: ${data.ram} MB`;
-      document.getElementById("panelDisk").innerText = `📦 Disk: ${data.disk} MB`;
-      document.getElementById("panelCPU").innerText = `⚙️ CPU: ${data.cpu}%`;
-      document.getElementById("panelHarga").innerText = `💰 Harga: ${data.harga}`;
-      popupBg.style.display = "flex";
-    }
-
     function closePopup() {
-      popupBg.style.display = "none";
+      overlay.classList.remove("active");
     }
   </script>
-
 </body>
 </html>
