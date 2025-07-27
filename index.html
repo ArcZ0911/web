@@ -1,195 +1,128 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ArcZ Panel Store</title>
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
-      background: #121212;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
       color: white;
     }
 
     header {
-      background: #1f1f1f;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1f1f1f;
       padding: 1rem;
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-align: left;
       position: sticky;
       top: 0;
-      z-index: 2;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      z-index: 10;
+    }
+
+    .menu-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .menu-dropdown {
+      position: absolute;
+      top: 60px;
+      left: 10px;
+      background-color: #2a2a2a;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+      flex-direction: column;
+    }
+
+    .menu-dropdown a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 0;
+    }
+
+    .menu-dropdown a:hover {
+      color: #00ffcc;
     }
 
     .container {
       padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    }
+
+    h1.title {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
     }
 
     .panel-button {
-      background: #2a2a2a;
-      color: white;
+      background-color: #2b2b2b;
       border: none;
       padding: 1rem;
       border-radius: 10px;
-      font-size: 1rem;
+      margin-bottom: 10px;
       text-align: left;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      justify-content: flex-start;
-      cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
+      width: 100%;
+      font-size: 1rem;
+      transition: background 0.3s, transform 0.2s;
     }
 
     .panel-button:hover {
-      background: #333;
-      transform: scale(1.01);
+      background-color: #3a3a3a;
+      transform: scale(1.02);
     }
 
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0s, opacity 0.3s ease;
-    }
-
-    .overlay.active {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .popup {
-      background: #1e1e1e;
-      border-radius: 15px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 400px;
-      transform: scale(0.5);
-      animation: popupIn 0.3s forwards;
-    }
-
-    @keyframes popupIn {
-      to {
-        transform: scale(1);
+    @media (min-width: 600px) {
+      .container {
+        max-width: 400px;
+        margin: auto;
       }
-    }
-
-    .popup h2 {
-      margin-top: 0;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      background: #ff4b4b;
-      color: white;
-      border: none;
-      padding: 0.5rem;
-      border-radius: 50%;
-      font-size: 1rem;
-      cursor: pointer;
-      z-index: 20;
-    }
-
-    .buy-button {
-      background: #00c853;
-      color: white;
-      padding: 0.8rem;
-      border: none;
-      width: 100%;
-      border-radius: 8px;
-      font-weight: bold;
-      margin-top: 1rem;
-      font-size: 1rem;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <header>🤖 ArcZ Panel Store</header>
+  <header>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="menu-dropdown" id="menu">
+      <a href="https://wa.me/6289523042979" target="_blank">Contact Owner</a>
+    </div>
+    <img src="https://files.catbox.moe/fv5zgh.jpg" alt="Foto Profil" class="profile-pic">
+  </header>
 
   <div class="container">
-    <button class="panel-button" data-command="1gb">🤖 Panel 1GB</button>
-    <button class="panel-button" data-command="2gb">🤖 Panel 2GB</button>
-    <button class="panel-button" data-command="3gb">🤖 Panel 3GB</button>
-    <button class="panel-button" data-command="4gb">🤖 Panel 4GB</button>
-    <button class="panel-button" data-command="5gb">🤖 Panel 5GB</button>
-    <button class="panel-button" data-command="6gb">🤖 Panel 6GB</button>
-    <button class="panel-button" data-command="7gb">🤖 Panel 7GB</button>
-    <button class="panel-button" data-command="8gb">🤖 Panel 8GB</button>
-    <button class="panel-button" data-command="9gb">🤖 Panel 9GB</button>
-    <button class="panel-button" data-command="10gb">🤖 Panel 10GB</button>
-    <button class="panel-button" data-command="unlimited">🤖 Panel Unlimited</button>
-  </div>
+    <h1 class="title">ArcZ Panel Store</h1>
 
-  <div class="overlay" id="overlay">
-    <div class="popup" id="popup">
-      <h2 id="popupTitle">Panel</h2>
-      <p><strong>RAM:</strong> <span id="popupRam"></span> MB</p>
-      <p><strong>Disk:</strong> <span id="popupDisk"></span> MB</p>
-      <p><strong>CPU:</strong> <span id="popupCpu"></span>%</p>
-      <p><strong>Harga:</strong> <span id="popupPrice"></span></p>
-      <button class="buy-button">Buy Panel</button>
-    </div>
-    <button class="close-btn" onclick="closePopup()">✕</button>
+    <button class="panel-button">Panel 1GB - Rp 2.000</button>
+    <button class="panel-button">Panel 2GB - Rp 3.000</button>
+    <button class="panel-button">Panel 3GB - Rp 4.000</button>
+    <button class="panel-button">Panel 4GB - Rp 5.000</button>
+    <button class="panel-button">Panel 5GB - Rp 6.000</button>
+    <button class="panel-button">Panel 6GB - Rp 7.000</button>
+    <button class="panel-button">Panel 7GB - Rp 8.000</button>
+    <button class="panel-button">Panel 8GB - Rp 9.000</button>
+    <button class="panel-button">Panel 9GB - Rp 10.000</button>
+    <button class="panel-button">Panel 10GB - Rp 11.000</button>
+    <button class="panel-button">Panel Unlimited - Rp 15.000</button>
   </div>
 
   <script>
-    const popup = document.getElementById('popup');
-    const overlay = document.getElementById('overlay');
-
-    const popupRam = document.getElementById('popupRam');
-    const popupDisk = document.getElementById('popupDisk');
-    const popupCpu = document.getElementById('popupCpu');
-    const popupPrice = document.getElementById('popupPrice');
-    const popupTitle = document.getElementById('popupTitle');
-
-    document.querySelectorAll('.panel-button').forEach(button => {
-      button.addEventListener('click', () => {
-        const command = button.dataset.command;
-        let ram = "0", disknya = "0", cpu = "0", harga = "-";
-
-        if (command === "1gb") { ram = "1024"; disknya = "1024"; cpu = "30"; harga = "2K"; }
-        else if (command === "2gb") { ram = "2048"; disknya = "2048"; cpu = "50"; harga = "3K"; }
-        else if (command === "3gb") { ram = "3072"; disknya = "3072"; cpu = "70"; harga = "4K"; }
-        else if (command === "4gb") { ram = "4096"; disknya = "4096"; cpu = "90"; harga = "5K"; }
-        else if (command === "5gb") { ram = "5120"; disknya = "5120"; cpu = "110"; harga = "6K"; }
-        else if (command === "6gb") { ram = "6144"; disknya = "6144"; cpu = "125"; harga = "7K"; }
-        else if (command === "7gb") { ram = "7168"; disknya = "7168"; cpu = "150"; harga = "8K"; }
-        else if (command === "8gb") { ram = "8192"; disknya = "8192"; cpu = "170"; harga = "9K"; }
-        else if (command === "9gb") { ram = "9216"; disknya = "9216"; cpu = "180"; harga = "10K"; }
-        else if (command === "10gb") { ram = "10240"; disknya = "10240"; cpu = "200"; harga = "11K"; }
-        else if (command === "unlimited") { ram = "∞"; disknya = "∞"; cpu = "∞"; harga = "15K"; }
-
-        popupTitle.textContent = `Panel ${command.toUpperCase()}`;
-        popupRam.textContent = ram;
-        popupDisk.textContent = disknya;
-        popupCpu.textContent = cpu;
-        popupPrice.textContent = harga;
-
-        overlay.classList.add("active");
-      });
-    });
-
-    function closePopup() {
-      overlay.classList.remove("active");
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
     }
   </script>
+
 </body>
 </html>
