@@ -21,19 +21,25 @@
     header {
       background: #222;
       padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .open-sidebar {
-      padding: 1rem;
-      background: #444;
+    .menu-icon {
+      font-size: 1.5rem;
+      background: none;
       border: none;
       color: white;
       cursor: pointer;
-      width: 100%;
-      text-align: left;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      flex-grow: 1;
+      text-align: center;
+      margin-right: 1.5rem;
     }
 
     .sidebar {
@@ -102,29 +108,31 @@
 
     .popup {
       position: fixed;
-      top: -100%;
+      bottom: -100%;
       left: 50%;
       transform: translateX(-50%);
       background: #222;
       padding: 2rem;
-      border-radius: 1rem;
+      border-radius: 1rem 1rem 0 0;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      transition: top 0.4s ease;
+      transition: bottom 0.4s ease;
       z-index: 200;
-      width: 80%;
-      max-width: 400px;
+      width: 100%;
+      max-width: 500px;
     }
 
     .popup.active {
-      top: 20%;
+      bottom: 0;
     }
 
     .popup h2 {
       margin-bottom: 1rem;
+      text-align: center;
     }
 
     .popup p {
       margin: 0.5rem 0;
+      text-align: center;
     }
 
     .popup .buy-button {
@@ -154,9 +162,10 @@
 </head>
 <body>
 
-<header>ArcZNewEra</header>
-
-<button class="open-sidebar" onclick="toggleSidebar(true)">☰ Contact Owner</button>
+<header>
+  <button class="menu-icon" onclick="toggleSidebar(true)">☰</button>
+  <div class="title">ArcZNewEra</div>
+</header>
 
 <div class="sidebar" id="sidebar">
   <h2>Contact Owner</h2>
