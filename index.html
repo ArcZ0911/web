@@ -1,38 +1,73 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Profil Pribadi</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profil ArcZ</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <div class="profile-card">
-      <img src="https://files.catbox.moe/fv5zgh.jpg" alt="Foto Profil" class="profile-img">
+      <img src="https://files.catbox.moe/fv5zgh.jpg" alt="Foto Profil" class="profile-img" />
       <h1>ArcZNewEra</h1>
       <p class="desc">Web Developer • Creative Dev • Anime Lover</p>
       <div class="social-links">
-        <a href="https://wa.me//6289523042979" target="_blank">Whatsapp ArcZ</a>
+        <a href="https://wa.me/6289523042979" target="_blank">Whatsapp ArcZ</a>
       </div>
 
       <div class="sales-section">
         <h2>List Jualan ArcZ 🌟</h2>
         <div class="button-group">
-          <button>Panel 1GB</button>
-          <button>Panel 2GB</button>
-          <button>Panel 3GB</button>
-          <button>Panel 4GB</button>
-          <button>Panel 5GB</button>
-          <button>Panel 6GB</button>
-          <button>Panel 7GB</button>
-          <button>Panel 8GB</button>
-          <button>Panel 9GB</button>
-          <button>Panel 10GB</button>
-          <button class="unlimited">Unlimited 💥</button>
+
+          <!-- Contoh Panel 1GB -->
+          <div class="panel-item">
+            <button onclick="toggleDetail(1)">Panel 1GB</button>
+            <div id="detail-1" class="panel-detail hidden">
+              <p><strong>Harga:</strong> Rp10.000</p>
+              <p><strong>RAM:</strong> 1GB</p>
+              <p><strong>Disk:</strong> 5GB</p>
+              <p><strong>CPU:</strong> 10%</p>
+              <a href="https://wa.me/6289523042979" target="_blank" class="buy-btn">Buy Panel</a>
+            </div>
+          </div>
+
+          <!-- Panel 2GB -->
+          <div class="panel-item">
+            <button onclick="toggleDetail(2)">Panel 2GB</button>
+            <div id="detail-2" class="panel-detail hidden">
+              <p><strong>Harga:</strong> Rp15.000</p>
+              <p><strong>RAM:</strong> 2GB</p>
+              <p><strong>Disk:</strong> 10GB</p>
+              <p><strong>CPU:</strong> 20%</p>
+              <a href="https://wa.me/6289523042979" target="_blank" class="buy-btn">Buy Panel</a>
+            </div>
+          </div>
+
+          <!-- Tambah panel lainnya sesuai kebutuhan... -->
+
+          <!-- Unlimited -->
+          <div class="panel-item">
+            <button class="unlimited" onclick="toggleDetail(99)">Unlimited 💥</button>
+            <div id="detail-99" class="panel-detail hidden">
+              <p><strong>Harga:</strong> Rp100.000</p>
+              <p><strong>RAM:</strong> Unlimited</p>
+              <p><strong>Disk:</strong> Unlimited</p>
+              <p><strong>CPU:</strong> 100%</p>
+              <a href="https://wa.me/6289523042979" target="_blank" class="buy-btn">Buy Panel</a>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    function toggleDetail(id) {
+      const detail = document.getElementById("detail-" + id);
+      detail.classList.toggle("hidden");
+    }
+  </script>
 </body>
 </html>
