@@ -1,195 +1,191 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>ArcZ Panel List</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel ArcZ</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #1c1c1c, #2e2e2e);
-      color: white;
+      padding: 0;
     }
 
-    .container {
-      padding: 40px;
+    body {
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
       text-align: center;
     }
 
-    .panel-button {
-      background: #444;
-      color: white;
-      padding: 14px 22px;
-      margin: 10px;
+    .panel-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .panel-buttons button {
+      padding: 12px 20px;
+      border-radius: 12px;
       border: none;
-      border-radius: 14px;
-      font-size: 16px;
+      background-color: #ffffff22;
+      color: white;
+      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background 0.3s;
     }
 
-    .panel-button:hover {
-      transform: scale(1.05);
-      background: #555;
+    .panel-buttons button:hover {
+      transform: translateY(-3px);
+      background-color: #ffffff33;
     }
 
-    /* MODAL */
-    .modal {
+    .overlay {
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(6px);
-      background-color: rgba(0, 0, 0, 0.3);
-      display: flex;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      display: none;
       justify-content: center;
       align-items: center;
       z-index: 10;
-      animation: fadeIn 0.2s ease-in-out;
     }
 
-    .modal.hidden {
-      display: none;
-    }
-
-    .modal-content {
-      background: #222;
-      padding: 25px;
-      border-radius: 16px;
-      width: 300px;
-      animation: slideIn 0.3s ease-out;
+    .popup {
+      background-color: #2d2d2d;
+      border-radius: 15px;
+      padding: 20px;
+      width: 90%;
+      max-width: 350px;
       position: relative;
+      animation: slideDown 0.4s ease-out;
     }
 
-    .modal-content h2 {
-      margin-top: 0;
-    }
-
-    .modal-content p {
-      margin: 8px 0;
-    }
-
-    .buy-btn {
-      background: #ff5e57;
-      color: white;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 10px;
-      margin-top: 15px;
-      display: inline-block;
-      text-decoration: none;
-      font-weight: bold;
+    @keyframes slideDown {
+      from {
+        transform: scale(0.7) translateY(-100px);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
     }
 
     .close-btn {
       position: absolute;
       top: 10px;
       right: 15px;
-      background: none;
+      font-size: 18px;
       color: white;
+      background: none;
       border: none;
-      font-size: 22px;
       cursor: pointer;
     }
 
-    @keyframes slideIn {
-      from {
-        transform: translateY(-40px) scale(0.9);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
+    .popup h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
     }
 
-    @keyframes fadeIn {
-      from {
-        backdrop-filter: blur(0px);
-        background-color: rgba(0, 0, 0, 0);
-      }
-      to {
-        backdrop-filter: blur(6px);
-        background-color: rgba(0, 0, 0, 0.3);
-      }
+    .popup p {
+      margin: 5px 0;
+      font-size: 15px;
     }
 
-    @keyframes slideOut {
-      from {
-        transform: translateY(0) scale(1);
-        opacity: 1;
+    .buy-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .buy-btn:hover {
+      background-color: #45a049;
+    }
+
+    @media (max-width: 480px) {
+      .popup {
+        width: 95%;
+        padding: 18px;
       }
-      to {
-        transform: translateY(-40px) scale(0.9);
-        opacity: 0;
+
+      .panel-buttons {
+        gap: 10px;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>List Panel ArcZ</h1>
-  <button class="panel-button" onclick="showPanel(1)">Panel 1GB</button>
-  <button class="panel-button" onclick="showPanel(2)">Panel 2GB</button>
-  <button class="panel-button" onclick="showPanel(3)">Panel 3GB</button>
-  <button class="panel-button" onclick="showPanel(4)">Panel 4GB</button>
-  <button class="panel-button" onclick="showPanel(5)">Panel 5GB</button>
-  <button class="panel-button" onclick="showPanel(6)">Panel 6GB</button>
-  <button class="panel-button" onclick="showPanel(7)">Panel 7GB</button>
-  <button class="panel-button" onclick="showPanel('unlimited')">Unlimited 💥</button>
-</div>
-
-<div id="modal" class="modal hidden">
-  <div class="modal-content" id="modalContent">
-    <button class="close-btn" onclick="closeModal()">❌</button>
-    <h2 id="panelTitle">Panel</h2>
-    <p><strong>Harga:</strong> <span id="harga"></span></p>
-    <p><strong>RAM:</strong> <span id="ram"></span></p>
-    <p><strong>Disk:</strong> <span id="disk"></span></p>
-    <p><strong>CPU:</strong> <span id="cpu"></span></p>
-    <a href="https://wa.me/6289523042979" class="buy-btn">Buy Panel</a>
+  <h1>Panel ArcZ Hosting</h1>
+  <div class="panel-buttons">
+    <button onclick="showPopup(1)">Panel 1GB</button>
+    <button onclick="showPopup(2)">Panel 2GB</button>
+    <button onclick="showPopup(3)">Panel 3GB</button>
+    <button onclick="showPopup(4)">Panel 4GB</button>
+    <button onclick="showPopup(5)">Panel 5GB</button>
+    <button onclick="showPopup(6)">Panel 6GB</button>
+    <button onclick="showPopup(7)">Panel 7GB</button>
+    <button onclick="showPopup('unlimited')">Unlimited 💥</button>
   </div>
-</div>
 
-<script>
-  const dataPanel = {
-    1: { title: "Panel 1GB", harga: "Rp10.000", ram: "1GB", disk: "5GB", cpu: "10%" },
-    2: { title: "Panel 2GB", harga: "Rp15.000", ram: "2GB", disk: "10GB", cpu: "20%" },
-    3: { title: "Panel 3GB", harga: "Rp20.000", ram: "3GB", disk: "15GB", cpu: "30%" },
-    4: { title: "Panel 4GB", harga: "Rp25.000", ram: "4GB", disk: "20GB", cpu: "40%" },
-    5: { title: "Panel 5GB", harga: "Rp30.000", ram: "5GB", disk: "25GB", cpu: "50%" },
-    6: { title: "Panel 6GB", harga: "Rp35.000", ram: "6GB", disk: "30GB", cpu: "60%" },
-    7: { title: "Panel 7GB", harga: "Rp40.000", ram: "7GB", disk: "35GB", cpu: "70%" },
-    unlimited: { title: "Unlimited Panel 💥", harga: "Rp100.000", ram: "Unlimited", disk: "Unlimited", cpu: "Unlimited" }
-  };
+  <div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+      <button class="close-btn" onclick="hidePopup()">❌</button>
+      <h2 id="panel-title"></h2>
+      <p><strong>Harga:</strong> <span id="harga"></span></p>
+      <p><strong>RAM:</strong> <span id="ram"></span></p>
+      <p><strong>Disk:</strong> <span id="disk"></span></p>
+      <p><strong>CPU:</strong> <span id="cpu"></span></p>
+      <a href="https://wa.me/6289523042979" class="buy-btn">Buy Panel</a>
+    </div>
+  </div>
 
-  function showPanel(id) {
-    const modal = document.getElementById("modal");
-    const content = document.getElementById("modalContent");
-    const panel = dataPanel[id];
+  <script>
+    const data = {
+      1: { ram: "1GB", disk: "5GB", cpu: "10%", harga: "Rp10.000" },
+      2: { ram: "2GB", disk: "10GB", cpu: "20%", harga: "Rp20.000" },
+      3: { ram: "3GB", disk: "15GB", cpu: "30%", harga: "Rp30.000" },
+      4: { ram: "4GB", disk: "20GB", cpu: "40%", harga: "Rp40.000" },
+      5: { ram: "5GB", disk: "25GB", cpu: "50%", harga: "Rp50.000" },
+      6: { ram: "6GB", disk: "30GB", cpu: "60%", harga: "Rp60.000" },
+      7: { ram: "7GB", disk: "35GB", cpu: "70%", harga: "Rp70.000" },
+      unlimited: { ram: "Unlimited", disk: "Unlimited", cpu: "100%", harga: "Rp150.000" },
+    };
 
-    document.getElementById("panelTitle").innerText = panel.title;
-    document.getElementById("harga").innerText = panel.harga;
-    document.getElementById("ram").innerText = panel.ram;
-    document.getElementById("disk").innerText = panel.disk;
-    document.getElementById("cpu").innerText = panel.cpu;
+    function showPopup(id) {
+      const panel = data[id];
+      document.getElementById("panel-title").textContent = `Panel ${id === "unlimited" ? "Unlimited 💥" : id + "GB"}`;
+      document.getElementById("ram").textContent = panel.ram;
+      document.getElementById("disk").textContent = panel.disk;
+      document.getElementById("cpu").textContent = panel.cpu;
+      document.getElementById("harga").textContent = panel.harga;
+      document.getElementById("overlay").style.display = "flex";
+    }
 
-    modal.classList.remove("hidden");
-    content.style.animation = "slideIn 0.3s ease-out";
-  }
-
-  function closeModal() {
-    const modal = document.getElementById("modal");
-    const content = document.getElementById("modalContent");
-
-    content.style.animation = "slideOut 0.3s ease-in-out";
-    setTimeout(() => {
-      modal.classList.add("hidden");
-    }, 300);
-  }
-</script>
+    function hidePopup() {
+      document.getElementById("overlay").style.display = "none";
+    }
+  </script>
 
 </body>
 </html>
