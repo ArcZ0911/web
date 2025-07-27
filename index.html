@@ -57,11 +57,16 @@
       padding-bottom: 0.5rem;
     }
 
-    .sidebar a {
+    .sidebar a, .sidebar button {
       display: block;
       margin-bottom: 0.8rem;
       color: #fff;
       text-decoration: none;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
     }
 
     .sidebar-overlay {
@@ -83,21 +88,27 @@
       opacity: 1;
     }
 
-    .main {
-      padding: 2rem;
-    }
-
-    /* Scroll Panel Box */
-    .panel-box {
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background: #1c1c1c;
-      margin: 1rem;
       padding: 1rem;
       border-radius: 10px;
-      max-height: 70vh;
+      z-index: 200;
+      width: 90%;
+      max-width: 400px;
+      max-height: 80vh;
       overflow-y: auto;
+      display: none;
     }
 
-    .panel-box h2 {
+    .popup.active {
+      display: block;
+    }
+
+    .popup h2 {
       text-align: center;
       margin-bottom: 1rem;
       font-size: 1.3rem;
@@ -120,6 +131,19 @@
     .panel-btn:hover {
       background: #333;
     }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4b4b;
+      color: white;
+      border: none;
+      padding: 0.4rem 0.6rem;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -129,16 +153,20 @@
   <div class="title">ArcZNewEra</div>
 </header>
 
+<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
   <h2>Contact Owner</h2>
   <a href="https://wa.me/6281234567890" target="_blank">WhatsApp ArcZ</a>
   <a href="https://t.me/arcznewera" target="_blank">Telegram ArcZ</a>
+  <button onclick="openPopup()">Harga Panel</button>
 </div>
 
+<!-- Blur Overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
 
-<!-- Panel Scroll Section -->
-<div class="panel-box">
+<!-- Popup Harga Panel -->
+<div class="popup" id="popup">
+  <button class="close-btn" onclick="closePopup()">✕</button>
   <h2>Harga Panel ArcZ</h2>
   <button class="panel-btn">1 GB | 10K | 50% | 10GB</button>
   <button class="panel-btn">2 GB | 15K | 60% | 20GB</button>
@@ -155,6 +183,15 @@
   function toggleSidebar(show) {
     document.getElementById('sidebar').classList.toggle('active', show);
     document.getElementById('sidebarOverlay').classList.toggle('active', show);
+  }
+
+  function openPopup() {
+    document.getElementById('popup').classList.add('active');
+    toggleSidebar(false);
+  }
+
+  function closePopup() {
+    document.getElementById('popup').classList.remove('active');
   }
 </script>
 
