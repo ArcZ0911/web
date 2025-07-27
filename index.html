@@ -1,241 +1,195 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Panel ArcZ</title>
+  <meta charset="UTF-8">
+  <title>ArcZ Panel List</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #4e54c8, #8f94fb);
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #1c1c1c, #2e2e2e);
       color: white;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 30px 10px;
     }
 
     .container {
+      padding: 40px;
       text-align: center;
     }
 
-    .profile-card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      max-width: 400px;
-      width: 100%;
-    }
-
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid white;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 26px;
-    }
-
-    .desc {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #ddd;
-    }
-
-    .social-links a {
-      display: inline-block;
-      margin: 10px 8px;
-      text-decoration: none;
-      color: #fff;
-      background: rgba(255,255,255,0.2);
-      padding: 8px 14px;
-      border-radius: 12px;
-      transition: background 0.3s;
-    }
-
-    .social-links a:hover {
-      background: rgba(255,255,255,0.4);
-    }
-
-    .sales-section {
-      margin-top: 30px;
-    }
-
-    .sales-section h2 {
-      font-size: 20px;
-      margin-bottom: 15px;
-      color: #fff;
-    }
-
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .panel-item {
-      width: 100%;
-    }
-
-    .panel-item button {
-      width: 100%;
-      background-color: #ffffff22;
-      border: none;
-      padding: 12px;
-      border-radius: 12px;
+    .panel-button {
+      background: #444;
       color: white;
+      padding: 14px 22px;
+      margin: 10px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
       cursor: pointer;
-      font-size: 14px;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
     }
 
-    .panel-item button:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    .panel-button:hover {
+      transform: scale(1.05);
+      background: #555;
     }
 
-    .panel-detail {
-      background: rgba(255, 255, 255, 0.05);
-      margin-top: 10px;
-      padding: 12px;
-      border-radius: 10px;
-      text-align: left;
-      font-size: 13px;
-      animation: fadeIn 0.3s ease-in-out;
-      color: #fff;
+    /* MODAL */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(6px);
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    .modal-content {
+      background: #222;
+      padding: 25px;
+      border-radius: 16px;
+      width: 300px;
+      animation: slideIn 0.3s ease-out;
       position: relative;
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+    }
+
+    .modal-content p {
+      margin: 8px 0;
+    }
+
+    .buy-btn {
+      background: #ff5e57;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 15px;
+      display: inline-block;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     .close-btn {
       position: absolute;
-      top: 8px;
-      right: 10px;
-      background: #ff1744;
-      border: none;
+      top: 10px;
+      right: 15px;
+      background: none;
       color: white;
-      font-size: 14px;
-      padding: 2px 6px;
-      border-radius: 8px;
+      border: none;
+      font-size: 22px;
       cursor: pointer;
     }
 
-    .buy-btn {
-      display: inline-block;
-      margin-top: 10px;
-      background-color: #00c853;
-      padding: 8px 14px;
-      border-radius: 8px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .buy-btn:hover {
-      background-color: #00e676;
-    }
-
-    .unlimited {
-      background-color: #ff5e57;
-      font-weight: bold;
-    }
-
-    .unlimited:hover {
-      background-color: #ff7675;
-    }
-
-    .hidden {
-      display: none;
+    @keyframes slideIn {
+      from {
+        transform: translateY(-40px) scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
     }
 
     @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+      from {
+        backdrop-filter: blur(0px);
+        background-color: rgba(0, 0, 0, 0);
+      }
+      to {
+        backdrop-filter: blur(6px);
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-40px) scale(0.9);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="profile-card">
-      <img src="https://files.catbox.moe/fv5zgh.jpg" alt="Foto Profil" class="profile-img" />
-      <h1>ArcZNewEra</h1>
-      <p class="desc">Web Developer • Creative Dev • Anime Lover</p>
-      <div class="social-links">
-        <a href="https://wa.me/6289523042979" target="_blank">Whatsapp ArcZ</a>
-      </div>
 
-      <div class="sales-section">
-        <h2>List Jualan ArcZ 🌟</h2>
-        <div class="button-group" id="panelContainer"></div>
-      </div>
-    </div>
+<div class="container">
+  <h1>List Panel ArcZ</h1>
+  <button class="panel-button" onclick="showPanel(1)">Panel 1GB</button>
+  <button class="panel-button" onclick="showPanel(2)">Panel 2GB</button>
+  <button class="panel-button" onclick="showPanel(3)">Panel 3GB</button>
+  <button class="panel-button" onclick="showPanel(4)">Panel 4GB</button>
+  <button class="panel-button" onclick="showPanel(5)">Panel 5GB</button>
+  <button class="panel-button" onclick="showPanel(6)">Panel 6GB</button>
+  <button class="panel-button" onclick="showPanel(7)">Panel 7GB</button>
+  <button class="panel-button" onclick="showPanel('unlimited')">Unlimited 💥</button>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-content" id="modalContent">
+    <button class="close-btn" onclick="closeModal()">❌</button>
+    <h2 id="panelTitle">Panel</h2>
+    <p><strong>Harga:</strong> <span id="harga"></span></p>
+    <p><strong>RAM:</strong> <span id="ram"></span></p>
+    <p><strong>Disk:</strong> <span id="disk"></span></p>
+    <p><strong>CPU:</strong> <span id="cpu"></span></p>
+    <a href="https://wa.me/6289523042979" class="buy-btn">Buy Panel</a>
   </div>
+</div>
 
-  <script>
-    const panels = [
-      { id: 1, ram: "1GB", disk: "5GB", cpu: "10%", harga: "Rp10.000" },
-      { id: 2, ram: "2GB", disk: "10GB", cpu: "20%", harga: "Rp15.000" },
-      { id: 3, ram: "3GB", disk: "15GB", cpu: "30%", harga: "Rp20.000" },
-      { id: 4, ram: "4GB", disk: "20GB", cpu: "40%", harga: "Rp25.000" },
-      { id: 5, ram: "5GB", disk: "25GB", cpu: "50%", harga: "Rp30.000" },
-      { id: 6, ram: "6GB", disk: "30GB", cpu: "60%", harga: "Rp35.000" },
-      { id: 7, ram: "7GB", disk: "35GB", cpu: "70%", harga: "Rp40.000" },
-      { id: 99, ram: "Unlimited", disk: "Unlimited", cpu: "100%", harga: "Rp100.000", unlimited: true }
-    ];
+<script>
+  const dataPanel = {
+    1: { title: "Panel 1GB", harga: "Rp10.000", ram: "1GB", disk: "5GB", cpu: "10%" },
+    2: { title: "Panel 2GB", harga: "Rp15.000", ram: "2GB", disk: "10GB", cpu: "20%" },
+    3: { title: "Panel 3GB", harga: "Rp20.000", ram: "3GB", disk: "15GB", cpu: "30%" },
+    4: { title: "Panel 4GB", harga: "Rp25.000", ram: "4GB", disk: "20GB", cpu: "40%" },
+    5: { title: "Panel 5GB", harga: "Rp30.000", ram: "5GB", disk: "25GB", cpu: "50%" },
+    6: { title: "Panel 6GB", harga: "Rp35.000", ram: "6GB", disk: "30GB", cpu: "60%" },
+    7: { title: "Panel 7GB", harga: "Rp40.000", ram: "7GB", disk: "35GB", cpu: "70%" },
+    unlimited: { title: "Unlimited Panel 💥", harga: "Rp100.000", ram: "Unlimited", disk: "Unlimited", cpu: "Unlimited" }
+  };
 
-    const container = document.getElementById("panelContainer");
+  function showPanel(id) {
+    const modal = document.getElementById("modal");
+    const content = document.getElementById("modalContent");
+    const panel = dataPanel[id];
 
-    panels.forEach(panel => {
-      const div = document.createElement("div");
-      div.classList.add("panel-item");
+    document.getElementById("panelTitle").innerText = panel.title;
+    document.getElementById("harga").innerText = panel.harga;
+    document.getElementById("ram").innerText = panel.ram;
+    document.getElementById("disk").innerText = panel.disk;
+    document.getElementById("cpu").innerText = panel.cpu;
 
-      const btn = document.createElement("button");
-      btn.textContent = panel.unlimited ? "Unlimited 💥" : `Panel ${panel.ram}`;
-      if (panel.unlimited) btn.classList.add("unlimited");
-      btn.onclick = () => toggleDetail(panel.id);
+    modal.classList.remove("hidden");
+    content.style.animation = "slideIn 0.3s ease-out";
+  }
 
-      const detail = document.createElement("div");
-      detail.classList.add("panel-detail", "hidden");
-      detail.id = "detail-" + panel.id;
+  function closeModal() {
+    const modal = document.getElementById("modal");
+    const content = document.getElementById("modalContent");
 
-      detail.innerHTML = `
-        <button class="close-btn" onclick="closeDetail(${panel.id})">X</button>
-        <p><strong>Harga:</strong> ${panel.harga}</p>
-        <p><strong>RAM:</strong> ${panel.ram}</p>
-        <p><strong>Disk:</strong> ${panel.disk}</p>
-        <p><strong>CPU:</strong> ${panel.cpu}</p>
-        <a href="https://wa.me/6289523042979" class="buy-btn" target="_blank">Buy Panel</a>
-      `;
+    content.style.animation = "slideOut 0.3s ease-in-out";
+    setTimeout(() => {
+      modal.classList.add("hidden");
+    }, 300);
+  }
+</script>
 
-      div.appendChild(btn);
-      div.appendChild(detail);
-      container.appendChild(div);
-    });
-
-    function toggleDetail(id) {
-      panels.forEach(p => {
-        const el = document.getElementById("detail-" + p.id);
-        if (p.id === id) {
-          el.classList.toggle("hidden");
-        } else {
-          el.classList.add("hidden");
-        }
-      });
-    }
-
-    function closeDetail(id) {
-      const el = document.getElementById("detail-" + id);
-      el.classList.add("hidden");
-    }
-  </script>
 </body>
 </html>
