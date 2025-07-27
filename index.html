@@ -10,8 +10,10 @@
       font-family: 'Segoe UI', sans-serif;
       background-color: #121212;
       color: white;
+      overflow-x: hidden;
     }
 
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -20,7 +22,7 @@
       padding: 1rem;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
     }
 
     .menu-icon {
@@ -35,35 +37,45 @@
       object-fit: cover;
     }
 
-    .menu-dropdown {
-      position: absolute;
-      top: 60px;
-      left: 10px;
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 75%;
+      height: 100vh;
       background-color: #2a2a2a;
-      padding: 10px;
-      border-radius: 8px;
-      display: none;
+      padding: 20px;
+      transition: left 0.3s ease-in-out;
+      display: flex;
       flex-direction: column;
+      z-index: 999;
     }
 
-    .menu-dropdown a {
+    .sidebar a {
       color: white;
       text-decoration: none;
-      padding: 8px 0;
+      padding: 15px 0;
+      font-size: 1.2rem;
     }
 
-    .menu-dropdown a:hover {
+    .sidebar a:hover {
       color: #00ffcc;
+    }
+
+    .sidebar.show {
+      left: 0;
+    }
+
+    /* Title */
+    h1.title {
+      text-align: center;
+      margin: 1.5rem 1rem 1rem 1rem;
+      font-size: 1.8rem;
     }
 
     .container {
       padding: 1rem;
-    }
-
-    h1.title {
-      text-align: center;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
     }
 
     .panel-button {
@@ -76,6 +88,7 @@
       width: 100%;
       font-size: 1rem;
       transition: background 0.3s, transform 0.2s;
+      color: white;
     }
 
     .panel-button:hover {
@@ -88,22 +101,31 @@
         max-width: 400px;
         margin: auto;
       }
+
+      .sidebar {
+        width: 300px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Header -->
   <header>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-    <div class="menu-dropdown" id="menu">
-      <a href="https://wa.me/6289523042979" target="_blank">Contact Owner</a>
-    </div>
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
     <img src="https://files.catbox.moe/fv5zgh.jpg" alt="Foto Profil" class="profile-pic">
   </header>
 
-  <div class="container">
-    <h1 class="title">ArcZ Panel Store</h1>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="https://wa.me/6289523042979" target="_blank">Contact Owner</a>
+  </div>
 
+  <!-- Judul -->
+  <h1 class="title">ArcZ Panel Store</h1>
+
+  <!-- Isi tombol panel -->
+  <div class="container">
     <button class="panel-button">Panel 1GB - Rp 2.000</button>
     <button class="panel-button">Panel 2GB - Rp 3.000</button>
     <button class="panel-button">Panel 3GB - Rp 4.000</button>
@@ -118,9 +140,9 @@
   </div>
 
   <script>
-    function toggleMenu() {
-      const menu = document.getElementById("menu");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('show');
     }
   </script>
 
