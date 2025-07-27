@@ -16,9 +16,9 @@
     header {
       background: #1f1f1f;
       padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
       position: sticky;
       top: 0;
       z-index: 2;
@@ -26,45 +26,44 @@
     }
 
     .menu-icon {
+      position: absolute;
+      left: 1rem;
+      top: 1.1rem;
       font-size: 1.5rem;
       cursor: pointer;
     }
 
-    .profile-pic {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
     .container {
       padding: 1rem;
+      overflow-x: auto;
+    }
+
+    .panel-list {
       display: flex;
-      flex-direction: column;
-      gap: 15px;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
     }
 
     .panel-button {
       background: #2a2a2a;
       color: white;
       border: none;
-      padding: 1.2rem;
+      padding: 1rem;
       border-radius: 12px;
-      font-size: 1.1rem;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
+      font-size: 1rem;
+      min-width: 140px;
+      flex-shrink: 0;
       cursor: pointer;
       transition: transform 0.2s, background 0.3s;
     }
 
     .panel-button:hover {
       background: #333;
-      transform: scale(1.01);
+      transform: scale(1.02);
     }
 
-    .overlay, .sidebar {
+    .sidebar, .overlay {
       position: fixed;
       top: 0;
       height: 100%;
@@ -180,21 +179,23 @@
 
   <header>
     <div class="menu-icon" onclick="toggleSidebar(true)">☰</div>
-    <img src="https://raw.githubusercontent.com/ArcZ0911/database/main/arczpfp.jpg" alt="profil" class="profile-pic" />
+    ArcZNewEra
   </header>
 
   <div class="container">
-    <button class="panel-button" data-command="1gb">Panel 1GB</button>
-    <button class="panel-button" data-command="2gb">Panel 2GB</button>
-    <button class="panel-button" data-command="3gb">Panel 3GB</button>
-    <button class="panel-button" data-command="4gb">Panel 4GB</button>
-    <button class="panel-button" data-command="5gb">Panel 5GB</button>
-    <button class="panel-button" data-command="6gb">Panel 6GB</button>
-    <button class="panel-button" data-command="7gb">Panel 7GB</button>
-    <button class="panel-button" data-command="8gb">Panel 8GB</button>
-    <button class="panel-button" data-command="9gb">Panel 9GB</button>
-    <button class="panel-button" data-command="10gb">Panel 10GB</button>
-    <button class="panel-button" data-command="unlimited">Panel Unlimited</button>
+    <div class="panel-list">
+      <button class="panel-button" data-command="1gb">Panel 1GB</button>
+      <button class="panel-button" data-command="2gb">Panel 2GB</button>
+      <button class="panel-button" data-command="3gb">Panel 3GB</button>
+      <button class="panel-button" data-command="4gb">Panel 4GB</button>
+      <button class="panel-button" data-command="5gb">Panel 5GB</button>
+      <button class="panel-button" data-command="6gb">Panel 6GB</button>
+      <button class="panel-button" data-command="7gb">Panel 7GB</button>
+      <button class="panel-button" data-command="8gb">Panel 8GB</button>
+      <button class="panel-button" data-command="9gb">Panel 9GB</button>
+      <button class="panel-button" data-command="10gb">Panel 10GB</button>
+      <button class="panel-button" data-command="unlimited">Panel Unlimited</button>
+    </div>
   </div>
 
   <div class="overlay" id="overlay">
@@ -212,7 +213,6 @@
   <script>
     const popup = document.getElementById('popup');
     const overlay = document.getElementById('overlay');
-
     const popupRam = document.getElementById('popupRam');
     const popupDisk = document.getElementById('popupDisk');
     const popupCpu = document.getElementById('popupCpu');
