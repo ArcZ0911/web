@@ -1,181 +1,181 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ArcZ Panel Store</title>
   <style>
     body {
       margin: 0;
       font-family: sans-serif;
-      background: #0f0f0f;
+      background: #111;
       color: white;
-      overflow-x: hidden;
+      text-align: center;
     }
 
     header {
       position: sticky;
       top: 0;
-      background: #111;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
+      background: #1a1a1a;
+      padding: 15px;
+      font-size: 24px;
       font-weight: bold;
-      z-index: 10;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      z-index: 2;
     }
 
-    .panel-list {
+    .button-list {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      padding: 1rem;
+      gap: 15px;
+      padding: 20px;
     }
 
     .panel-btn {
+      background: #222;
+      border: 2px solid #444;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: white;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      background: #1a1a1a;
-      padding: 1rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.2rem;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    .panel-btn img {
-      width: 30px;
-      margin-right: 10px;
+      justify-content: center;
+      gap: 10px;
+      transition: 0.3s;
     }
 
     .panel-btn:hover {
       background: #333;
+      transform: scale(1.03);
     }
 
-    .popup-overlay {
+    .panel-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .popup-bg {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(5px);
-      display: none;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
       align-items: center;
       justify-content: center;
       z-index: 99;
+      display: none;
     }
 
     .popup {
-      background: #1f1f1f;
-      padding: 2rem;
+      background: #222;
+      padding: 20px;
       border-radius: 15px;
       width: 90%;
-      max-width: 350px;
-      text-align: center;
-      animation: popupAnim 0.3s ease forwards;
+      max-width: 400px;
+      animation: slideDown 0.4s ease;
+      position: relative;
     }
 
-    @keyframes popupAnim {
+    @keyframes slideDown {
       0% {
-        transform: translateY(-100%) scale(0.8);
         opacity: 0;
+        transform: translateY(-30px) scale(0.8);
       }
       100% {
-        transform: translateY(0) scale(1);
         opacity: 1;
+        transform: translateY(0) scale(1);
       }
     }
 
-    .close-btn {
+    .popup .close {
       position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 1.5rem;
-      color: white;
-      background: none;
-      border: none;
+      top: 10px;
+      right: 15px;
+      font-size: 22px;
       cursor: pointer;
+    }
+
+    .popup h3 {
+      margin-top: 10px;
+    }
+
+    .popup p {
+      margin: 8px 0;
     }
 
     .buy-btn {
-      background: #ff4d4d;
-      color: white;
+      background: #0f0;
+      padding: 10px 20px;
       border: none;
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
+      color: black;
+      font-weight: bold;
       border-radius: 8px;
-      margin-top: 1rem;
       cursor: pointer;
-    }
-
-    .buy-btn:hover {
-      background: #ff1a1a;
+      margin-top: 15px;
     }
 
   </style>
 </head>
 <body>
 
-  <header>ArcZ Panel Store</header>
+  <header>🤖 ArcZ Panel Store</header>
 
-  <div class="panel-list">
-    <!-- Panel buttons -->
-    <button class="panel-btn" onclick="showPopup('1gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 1GB</button>
-    <button class="panel-btn" onclick="showPopup('2gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 2GB</button>
-    <button class="panel-btn" onclick="showPopup('3gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 3GB</button>
-    <button class="panel-btn" onclick="showPopup('4gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 4GB</button>
-    <button class="panel-btn" onclick="showPopup('5gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 5GB</button>
-    <button class="panel-btn" onclick="showPopup('6gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 6GB</button>
-    <button class="panel-btn" onclick="showPopup('7gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 7GB</button>
-    <button class="panel-btn" onclick="showPopup('8gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 8GB</button>
-    <button class="panel-btn" onclick="showPopup('9gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 9GB</button>
-    <button class="panel-btn" onclick="showPopup('10gb')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Panel 10GB</button>
-    <button class="panel-btn" onclick="showPopup('unlimited')"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712107.png" alt="">Unlimited</button>
+  <div class="button-list" id="buttonList">
+    <!-- Buttons will be inserted by JavaScript -->
   </div>
 
-  <!-- Popup -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup" id="popupContent">
-      <button class="close-btn" onclick="hidePopup()">❌</button>
-      <h2 id="panelTitle">Panel</h2>
-      <p>Harga: <span id="panelPrice">-</span></p>
-      <p>RAM: <span id="panelRam">-</span> MB</p>
-      <p>Disk: <span id="panelDisk">-</span> MB</p>
-      <p>CPU: <span id="panelCpu">-</span>%</p>
+  <div class="popup-bg" id="popupBg">
+    <div class="popup">
+      <div class="close" onclick="closePopup()">✖</div>
+      <h3 id="panelTitle">Panel Info</h3>
+      <p id="panelRAM">RAM: </p>
+      <p id="panelDisk">Disk: </p>
+      <p id="panelCPU">CPU: </p>
+      <p id="panelHarga">Harga: </p>
       <button class="buy-btn">Buy Panel</button>
     </div>
   </div>
 
   <script>
-    function showPopup(command) {
-      let ram, disknya, cpu, price;
-      if (command == "1gb") { ram = "1024"; disknya = "1024"; cpu = "30"; price = "2K"; }
-      else if (command == "2gb") { ram = "2048"; disknya = "2048"; cpu = "50"; price = "3K"; }
-      else if (command == "3gb") { ram = "3072"; disknya = "3072"; cpu = "70"; price = "4K"; }
-      else if (command == "4gb") { ram = "4096"; disknya = "4096"; cpu = "90"; price = "5K"; }
-      else if (command == "5gb") { ram = "5120"; disknya = "5120"; cpu = "110"; price = "6K"; }
-      else if (command == "6gb") { ram = "6144"; disknya = "6144"; cpu = "125"; price = "7K"; }
-      else if (command == "7gb") { ram = "7168"; disknya = "7168"; cpu = "150"; price = "8K"; }
-      else if (command == "8gb") { ram = "8192"; disknya = "8192"; cpu = "170"; price = "9K"; }
-      else if (command == "9gb") { ram = "9216"; disknya = "9216"; cpu = "180"; price = "10K"; }
-      else if (command == "10gb") { ram = "10240"; disknya = "10240"; cpu = "200"; price = "11K"; }
-      else if (command == "unlimited") { ram = "∞"; disknya = "∞"; cpu = "∞"; price = "15K"; }
-      else { ram = "0"; disknya = "0"; cpu = "0"; price = "-"; }
+    const panelData = {
+      "1gb": { ram: 1024, disk: 1024, cpu: 30, harga: "2K" },
+      "2gb": { ram: 2048, disk: 2048, cpu: 50, harga: "3K" },
+      "3gb": { ram: 3072, disk: 3072, cpu: 70, harga: "4K" },
+      "4gb": { ram: 4096, disk: 4096, cpu: 90, harga: "5K" },
+      "5gb": { ram: 5120, disk: 5120, cpu: 110, harga: "6K" },
+      "6gb": { ram: 6144, disk: 6144, cpu: 125, harga: "7K" },
+      "7gb": { ram: 7168, disk: 7168, cpu: 150, harga: "8K" },
+      "8gb": { ram: 8192, disk: 8192, cpu: 170, harga: "9K" },
+      "9gb": { ram: 9216, disk: 9216, cpu: 180, harga: "10K" },
+      "10gb": { ram: 10240, disk: 10240, cpu: 200, harga: "11K" },
+      "unlimited": { ram: "∞", disk: "∞", cpu: "∞", harga: "15K" }
+    };
 
-      document.getElementById("panelTitle").innerText = "Panel " + command.toUpperCase();
-      document.getElementById("panelPrice").innerText = price;
-      document.getElementById("panelRam").innerText = ram;
-      document.getElementById("panelDisk").innerText = disknya;
-      document.getElementById("panelCpu").innerText = cpu;
+    const buttonList = document.getElementById("buttonList");
+    const popupBg = document.getElementById("popupBg");
 
-      document.getElementById("popupOverlay").style.display = "flex";
+    Object.keys(panelData).forEach(key => {
+      const btn = document.createElement("button");
+      btn.className = "panel-btn";
+      btn.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/4712/4712103.png" alt="🤖"> Panel ${key.toUpperCase()}`;
+      btn.onclick = () => showPopup(key);
+      buttonList.appendChild(btn);
+    });
+
+    function showPopup(type) {
+      const data = panelData[type];
+      document.getElementById("panelTitle").innerText = `Panel ${type.toUpperCase()}`;
+      document.getElementById("panelRAM").innerText = `💾 RAM: ${data.ram} MB`;
+      document.getElementById("panelDisk").innerText = `📦 Disk: ${data.disk} MB`;
+      document.getElementById("panelCPU").innerText = `⚙️ CPU: ${data.cpu}%`;
+      document.getElementById("panelHarga").innerText = `💰 Harga: ${data.harga}`;
+      popupBg.style.display = "flex";
     }
 
-    function hidePopup() {
-      document.getElementById("popupOverlay").style.display = "none";
+    function closePopup() {
+      popupBg.style.display = "none";
     }
   </script>
 
