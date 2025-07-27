@@ -5,17 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ArcZNewEra</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * {margin:0; padding:0; box-sizing:border-box}
     body {
       font-family: sans-serif;
       background: #111;
       color: white;
-      overflow-x: hidden;
     }
 
     header {
@@ -54,9 +48,7 @@
       padding: 1rem;
     }
 
-    .sidebar.active {
-      left: 0;
-    }
+    .sidebar.active { left: 0; }
 
     .sidebar h2 {
       font-size: 1.2rem;
@@ -104,25 +96,28 @@
       width: 100%;
       margin-top: 1rem;
       font-weight: bold;
+      border-radius: 8px;
     }
 
+    /* Pop-up Panel List */
     .popup {
       position: fixed;
-      top: -100%;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 400px;
       background: #222;
-      padding: 2rem;
-      border-radius: 0 0 1rem 1rem;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      transition: top 0.4s ease;
+      padding: 1rem;
+      border-radius: 10px;
       z-index: 200;
-      width: 100%;
-      max-width: 500px;
+      display: none;
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
     .popup.active {
-      top: 0;
+      display: block;
     }
 
     .popup h2 {
@@ -130,23 +125,20 @@
       text-align: center;
     }
 
-    .popup p {
-      margin: 0.5rem 0;
-      text-align: center;
-    }
-
-    .popup .buy-button {
-      margin-top: 1rem;
-      background: #00cc66;
-      color: white;
-      padding: 0.8rem 1.2rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
+    .popup button {
+      display: block;
       width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 0.5rem;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: left;
     }
 
-    .close-btn {
+    .popup .close-btn {
       position: absolute;
       top: 10px;
       right: 10px;
@@ -163,7 +155,7 @@
 <body>
 
 <header>
-  <button class="menu-icon" onclick="toggleSidebar(true)">☰</button>
+  <button class="menu-icon" onclick="toggleSidebar()">☰</button>
   <div class="title">ArcZNewEra</div>
 </header>
 
@@ -176,36 +168,42 @@
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
 
 <div class="main">
-  <button class="panel-btn" onclick="openPopup('Premium Panel', 2048, 50000, 20, 'Rp50.000')">List Panel</button>
+  <button class="panel-btn" onclick="togglePopup(true)">List Panel</button>
 </div>
 
 <div class="popup" id="popup">
-  <button class="close-btn" onclick="closePopup()">✕</button>
-  <h2 id="popupTitle">Panel</h2>
-  <p><strong>RAM:</strong> <span id="popupRam"></span> MB</p>
-  <p><strong>Disk:</strong> <span id="popupDisk"></span> MB</p>
-  <p><strong>CPU:</strong> <span id="popupCpu"></span>%</p>
-  <p><strong>Harga:</strong> <span id="popupPrice"></span></p>
-  <button class="buy-button">Buy Panel</button>
+  <button class="close-btn" onclick="togglePopup(false)">✕</button>
+  <h2>List Panel</h2>
+  <div id="panelList">
+    <!-- Tombol panel akan diisi dari JS -->
+  </div>
 </div>
 
 <script>
+  const panelData = [
+    { name: "1GB", ram: "1024", disk: "10240", cpu: "50", price: "Rp10.000" },
+    { name: "2GB", ram: "2048", disk: "20480", cpu: "60", price: "Rp15.000" },
+    { name: "3GB", ram: "3072", disk: "30720", cpu: "70", price: "Rp20.000" },
+    { name: "4GB", ram: "4096", disk: "40960", cpu: "80", price: "Rp30.000" },
+    { name: "5GB", ram: "5120", disk: "51200", cpu: "90", price: "Rp40.000" },
+    { name: "Unli", ram: "∞", disk: "∞", cpu: "∞", price: "Rp100.000" }
+  ];
+
+  const list = document.getElementById("panelList");
+  panelData.forEach(p => {
+    const btn = document.createElement("button");
+    btn.innerText = `${p.name} - ${p.price}`;
+    btn.onclick = () => alert(`RAM: ${p.ram} MB\nDisk: ${p.disk} MB\nCPU: ${p.cpu}%\nHarga: ${p.price}`);
+    list.appendChild(btn);
+  });
+
   function toggleSidebar(show) {
     document.getElementById('sidebar').classList.toggle('active', show);
     document.getElementById('sidebarOverlay').classList.toggle('active', show);
   }
 
-  function openPopup(title, ram, disk, cpu, price) {
-    document.getElementById('popupTitle').innerText = title;
-    document.getElementById('popupRam').innerText = ram;
-    document.getElementById('popupDisk').innerText = disk;
-    document.getElementById('popupCpu').innerText = cpu;
-    document.getElementById('popupPrice').innerText = price;
-    document.getElementById('popup').classList.add('active');
-  }
-
-  function closePopup() {
-    document.getElementById('popup').classList.remove('active');
+  function togglePopup(show) {
+    document.getElementById('popup').classList.toggle('active', show);
   }
 </script>
 
