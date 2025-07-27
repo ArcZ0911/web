@@ -5,8 +5,9 @@ body {
   color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 30px 10px;
 }
 
 .container {
@@ -18,7 +19,8 @@ body {
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-  max-width: 350px;
+  max-width: 400px;
+  width: 100%;
 }
 
 .profile-img {
@@ -54,19 +56,34 @@ h1 {
 .social-links a:hover {
   background: rgba(255,255,255,0.4);
 }
-.button-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
-  margin-top: 10px;
+
+.sales-section {
+  margin-top: 30px;
 }
 
-.button-group button {
+.sales-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.panel-item {
+  width: 100%;
+}
+
+.panel-item button {
+  width: 100%;
   background-color: #ffffff22;
   border: none;
-  padding: 12px 18px;
-  border-radius: 14px;
+  padding: 12px;
+  border-radius: 12px;
   color: white;
   cursor: pointer;
   font-size: 14px;
@@ -74,10 +91,35 @@ h1 {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-.button-group button:hover {
+.panel-item button:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-  background-color: #ffffff33;
+}
+
+.panel-detail {
+  background: rgba(255, 255, 255, 0.05);
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 13px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.buy-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #00c853;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.buy-btn:hover {
+  background-color: #00e676;
 }
 
 .unlimited {
@@ -87,4 +129,13 @@ h1 {
 
 .unlimited:hover {
   background-color: #ff7675;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
