@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ArcZNewEra</title>
   <style>
-    * {margin:0; padding:0; box-sizing:border-box}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: sans-serif;
       background: #111;
@@ -13,7 +13,7 @@
     }
 
     header {
-      background: #222;
+      background: #1a1a1a;
       padding: 1rem;
       display: flex;
       align-items: center;
@@ -87,68 +87,38 @@
       padding: 2rem;
     }
 
-    .panel-btn {
-      padding: 1rem;
-      background: #0066ff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
-    }
-
-    /* Pop-up Panel List */
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 400px;
-      background: #222;
+    /* Scroll Panel Box */
+    .panel-box {
+      background: #1c1c1c;
+      margin: 1rem;
       padding: 1rem;
       border-radius: 10px;
-      z-index: 200;
-      display: none;
-      max-height: 80vh;
+      max-height: 70vh;
       overflow-y: auto;
     }
 
-    .popup.active {
-      display: block;
-    }
-
-    .popup h2 {
-      margin-bottom: 1rem;
+    .panel-box h2 {
       text-align: center;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
     }
 
-    .popup button {
-      display: block;
-      width: 100%;
-      padding: 0.7rem;
-      margin-bottom: 0.5rem;
-      background: #333;
+    .panel-btn {
+      background: #222;
       color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      padding: 1rem;
+      margin-bottom: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid #444;
       text-align: left;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
     }
 
-    .popup .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #ff4b4b;
-      color: white;
-      border: none;
-      padding: 0.4rem 0.6rem;
-      border-radius: 50%;
-      font-size: 1rem;
-      cursor: pointer;
+    .panel-btn:hover {
+      background: #333;
     }
   </style>
 </head>
@@ -167,43 +137,24 @@
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
 
-<div class="main">
-  <button class="panel-btn" onclick="togglePopup(true)">List Panel</button>
-</div>
-
-<div class="popup" id="popup">
-  <button class="close-btn" onclick="togglePopup(false)">✕</button>
-  <h2>List Panel</h2>
-  <div id="panelList">
-    <!-- Tombol panel akan diisi dari JS -->
-  </div>
+<!-- Panel Scroll Section -->
+<div class="panel-box">
+  <h2>Harga Panel ArcZ</h2>
+  <button class="panel-btn">1 GB | 10K | 50% | 10GB</button>
+  <button class="panel-btn">2 GB | 15K | 60% | 20GB</button>
+  <button class="panel-btn">3 GB | 20K | 70% | 30GB</button>
+  <button class="panel-btn">4 GB | 30K | 80% | 40GB</button>
+  <button class="panel-btn">5 GB | 40K | 90% | 50GB</button>
+  <button class="panel-btn">6 GB | 50K | 100% | 60GB</button>
+  <button class="panel-btn">8 GB | 60K | 100% | 80GB</button>
+  <button class="panel-btn">10 GB | 70K | 100% | 100GB</button>
+  <button class="panel-btn">UNLI | 100K | 100% | UNLIMITED</button>
 </div>
 
 <script>
-  const panelData = [
-    { name: "1GB", ram: "1024", disk: "10240", cpu: "50", price: "Rp10.000" },
-    { name: "2GB", ram: "2048", disk: "20480", cpu: "60", price: "Rp15.000" },
-    { name: "3GB", ram: "3072", disk: "30720", cpu: "70", price: "Rp20.000" },
-    { name: "4GB", ram: "4096", disk: "40960", cpu: "80", price: "Rp30.000" },
-    { name: "5GB", ram: "5120", disk: "51200", cpu: "90", price: "Rp40.000" },
-    { name: "Unli", ram: "∞", disk: "∞", cpu: "∞", price: "Rp100.000" }
-  ];
-
-  const list = document.getElementById("panelList");
-  panelData.forEach(p => {
-    const btn = document.createElement("button");
-    btn.innerText = `${p.name} - ${p.price}`;
-    btn.onclick = () => alert(`RAM: ${p.ram} MB\nDisk: ${p.disk} MB\nCPU: ${p.cpu}%\nHarga: ${p.price}`);
-    list.appendChild(btn);
-  });
-
   function toggleSidebar(show) {
     document.getElementById('sidebar').classList.toggle('active', show);
     document.getElementById('sidebarOverlay').classList.toggle('active', show);
-  }
-
-  function togglePopup(show) {
-    document.getElementById('popup').classList.toggle('active', show);
   }
 </script>
 
