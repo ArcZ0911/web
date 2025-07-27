@@ -1,199 +1,182 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ArcZNewEra</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Arcz</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
+      margin: 0;
       font-family: sans-serif;
       background: #111;
       color: white;
     }
 
-    header {
-      background: #1a1a1a;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .container {
+      padding: 2rem;
+      text-align: center;
     }
 
-    .menu-icon {
-      font-size: 1.5rem;
-      background: none;
+    .open-popup-btn {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background: #007bff;
       border: none;
       color: white;
+      border-radius: 5px;
       cursor: pointer;
     }
 
-    .title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      flex-grow: 1;
-      text-align: center;
-      margin-right: 1.5rem;
-    }
-
-    .sidebar {
+    .overlay {
       position: fixed;
-      top: 0;
-      left: -250px;
-      height: 100%;
-      width: 250px;
-      background: #1e1e1e;
-      transition: left 0.3s ease;
-      z-index: 100;
-      padding: 1rem;
-    }
-
-    .sidebar.active { left: 0; }
-
-    .sidebar h2 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #444;
-      padding-bottom: 0.5rem;
-    }
-
-    .sidebar a, .sidebar button {
-      display: block;
-      margin-bottom: 0.8rem;
-      color: #fff;
-      text-decoration: none;
-      background: none;
-      border: none;
-      font-size: 1rem;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .sidebar-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.4);
-      visibility: hidden;
-      opacity: 0;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
       z-index: 99;
-      transition: all 0.3s ease;
     }
 
-    .sidebar-overlay.active {
-      visibility: visible;
-      opacity: 1;
+    .overlay.active {
+      display: flex;
     }
 
     .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #1c1c1c;
+      background: #222;
       padding: 1rem;
       border-radius: 10px;
-      z-index: 200;
       width: 90%;
       max-width: 400px;
-      max-height: 80vh;
+      max-height: 90vh;
       overflow-y: auto;
-      display: none;
-    }
-
-    .popup.active {
-      display: block;
+      position: relative;
     }
 
     .popup h2 {
-      text-align: center;
       margin-bottom: 1rem;
-      font-size: 1.3rem;
+      text-align: center;
     }
 
-    .panel-btn {
-      background: #222;
-      color: white;
-      padding: 1rem;
-      margin-bottom: 0.6rem;
-      border-radius: 8px;
-      border: 1px solid #444;
-      text-align: left;
+    .panel-button {
       width: 100%;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .panel-btn:hover {
+      padding: 0.8rem;
+      margin: 0.5rem 0;
       background: #333;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     .close-btn {
       position: absolute;
       top: 10px;
-      right: 10px;
-      background: #ff4b4b;
+      right: 15px;
+      background: transparent;
       color: white;
       border: none;
-      padding: 0.4rem 0.6rem;
-      border-radius: 50%;
-      font-size: 1rem;
+      font-size: 1.5rem;
       cursor: pointer;
     }
+
+    .buy-button {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.7rem;
+      background: #28a745;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .info-panel {
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
   </style>
 </head>
 <body>
+  <div class="container">
+    <button class="open-popup-btn" onclick="openPopup()">Harga Panel ArcZ</button>
+  </div>
 
-<header>
-  <button class="menu-icon" onclick="toggleSidebar()">☰</button>
-  <div class="title">ArcZNewEra</div>
-</header>
+  <div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+      <button class="close-btn" onclick="closePopup()">✕</button>
+      <h2>Harga Panel ArcZ</h2>
 
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-  <h2>Contact Owner</h2>
-  <a href="https://wa.me/6281234567890" target="_blank">WhatsApp ArcZ</a>
-  <a href="https://t.me/arcznewera" target="_blank">Telegram ArcZ</a>
-  <button onclick="openPopup()">Harga Panel</button>
-</div>
+      <div id="buttonList">
+        <!-- Tombol Panel -->
+        <button class="panel-button" data-command="1gb">Panel 1GB</button>
+        <button class="panel-button" data-command="2gb">Panel 2GB</button>
+        <button class="panel-button" data-command="3gb">Panel 3GB</button>
+        <button class="panel-button" data-command="4gb">Panel 4GB</button>
+        <button class="panel-button" data-command="5gb">Panel 5GB</button>
+        <button class="panel-button" data-command="6gb">Panel 6GB</button>
+        <button class="panel-button" data-command="7gb">Panel 7GB</button>
+        <button class="panel-button" data-command="8gb">Panel 8GB</button>
+        <button class="panel-button" data-command="9gb">Panel 9GB</button>
+        <button class="panel-button" data-command="10gb">Panel 10GB</button>
+        <button class="panel-button" data-command="unlimited">Panel Unlimited</button>
+      </div>
 
-<!-- Blur Overlay -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
+      <div class="info-panel" id="infoPanel" style="display:none">
+        <p><strong>RAM:</strong> <span id="popupRam"></span> MB</p>
+        <p><strong>Disk:</strong> <span id="popupDisk"></span> MB</p>
+        <p><strong>CPU:</strong> <span id="popupCpu"></span>%</p>
+        <p><strong>Harga:</strong> <span id="popupPrice"></span></p>
+        <button class="buy-button">Buy Panel</button>
+      </div>
+    </div>
+  </div>
 
-<!-- Popup Harga Panel -->
-<div class="popup" id="popup">
-  <button class="close-btn" onclick="closePopup()">✕</button>
-  <h2>Harga Panel ArcZ</h2>
-  <button class="panel-btn">1 GB | 10K | 50% | 10GB</button>
-  <button class="panel-btn">2 GB | 15K | 60% | 20GB</button>
-  <button class="panel-btn">3 GB | 20K | 70% | 30GB</button>
-  <button class="panel-btn">4 GB | 30K | 80% | 40GB</button>
-  <button class="panel-btn">5 GB | 40K | 90% | 50GB</button>
-  <button class="panel-btn">6 GB | 50K | 100% | 60GB</button>
-  <button class="panel-btn">8 GB | 60K | 100% | 80GB</button>
-  <button class="panel-btn">10 GB | 70K | 100% | 100GB</button>
-  <button class="panel-btn">UNLI | 100K | 100% | UNLIMITED</button>
-</div>
+  <script>
+    const overlay = document.getElementById('overlay');
+    const infoPanel = document.getElementById('infoPanel');
+    const popupRam = document.getElementById('popupRam');
+    const popupDisk = document.getElementById('popupDisk');
+    const popupCpu = document.getElementById('popupCpu');
+    const popupPrice = document.getElementById('popupPrice');
 
-<script>
-  function toggleSidebar(show) {
-    document.getElementById('sidebar').classList.toggle('active', show);
-    document.getElementById('sidebarOverlay').classList.toggle('active', show);
-  }
+    function openPopup() {
+      overlay.classList.add('active');
+    }
 
-  function openPopup() {
-    document.getElementById('popup').classList.add('active');
-    toggleSidebar(false);
-  }
+    function closePopup() {
+      overlay.classList.remove('active');
+      infoPanel.style.display = 'none';
+    }
 
-  function closePopup() {
-    document.getElementById('popup').classList.remove('active');
-  }
-</script>
+    document.querySelectorAll('.panel-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const command = button.dataset.command;
+        let ram = "0", disknya = "0", cpu = "0", harga = "-";
 
+        if (command === "1gb") { ram = "1024"; disknya = "1024"; cpu = "30"; harga = "2K"; }  
+        else if (command === "2gb") { ram = "2048"; disknya = "2048"; cpu = "50"; harga = "3K"; }  
+        else if (command === "3gb") { ram = "3072"; disknya = "3072"; cpu = "70"; harga = "4K"; }  
+        else if (command === "4gb") { ram = "4096"; disknya = "4096"; cpu = "90"; harga = "5K"; }  
+        else if (command === "5gb") { ram = "5120"; disknya = "5120"; cpu = "110"; harga = "6K"; }  
+        else if (command === "6gb") { ram = "6144"; disknya = "6144"; cpu = "125"; harga = "7K"; }  
+        else if (command === "7gb") { ram = "7168"; disknya = "7168"; cpu = "150"; harga = "8K"; }  
+        else if (command === "8gb") { ram = "8192"; disknya = "8192"; cpu = "170"; harga = "9K"; }  
+        else if (command === "9gb") { ram = "9216"; disknya = "9216"; cpu = "180"; harga = "10K"; }  
+        else if (command === "10gb") { ram = "10240"; disknya = "10240"; cpu = "200"; harga = "11K"; }  
+        else if (command === "unlimited") { ram = "∞"; disknya = "∞"; cpu = "∞"; harga = "15K"; }
+
+        popupRam.textContent = ram;
+        popupDisk.textContent = disknya;
+        popupCpu.textContent = cpu;
+        popupPrice.textContent = harga;
+        infoPanel.style.display = 'block';
+      });
+    });
+  </script>
 </body>
 </html>
