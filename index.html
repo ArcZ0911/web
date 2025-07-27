@@ -120,6 +120,83 @@
     .panel-btn:hover {
       background: #333;
     }
+  
+.container {  
+  padding: 1rem;  
+  display: flex;  
+  flex-direction: column;  
+  gap: 15px;  
+}  
+
+.panel-button {  
+  background: #2a2a2a;  
+  color: white;  
+  border: none;  
+  padding: 1.2rem;  
+  border-radius: 12px;  
+  font-size: 1.1rem;  
+  text-align: left;  
+  display: flex;  
+  align-items: center;  
+  justify-content: flex-start;  
+  cursor: pointer;  
+  transition: transform 0.2s, background 0.3s;  
+}  
+
+.panel-button:hover {  
+  background: #333;  
+  transform: scale(1.01);  
+}  
+
+.overlay, .sidebar {  
+  position: fixed;  
+  top: 0;  
+  height: 100%;  
+  z-index: 100;  
+  transition: transform 0.3s ease;  
+}  
+
+.popup {  
+  background: #1e1e1e;  
+  border-radius: 15px;  
+  padding: 2rem;  
+  width: 90%;  
+  max-width: 400px;  
+  margin: auto;  
+  margin-top: 10vh;  
+  animation: popupIn 0.3s forwards;  
+}  
+
+@keyframes popupIn {  
+  from { transform: scale(0.7); opacity: 0; }  
+  to { transform: scale(1); opacity: 1; }  
+}  
+
+.close-btn {  
+  position: absolute;  
+  top: 15px;  
+  right: 20px;  
+  background: #ff4b4b;  
+  color: white;  
+  border: none;  
+  padding: 0.5rem;  
+  border-radius: 50%;  
+  font-size: 1rem;  
+  cursor: pointer;  
+}  
+
+.buy-button {  
+  background: #00c853;  
+  color: white;  
+  padding: 0.8rem;  
+  border: none;  
+  width: 100%;  
+  border-radius: 8px;  
+  font-weight: bold;  
+  margin-top: 1rem;  
+  font-size: 1rem;  
+  cursor: pointer;  
+}
   </style>
 </head>
 <body>
@@ -138,8 +215,6 @@
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
 
 <!-- Panel Scroll Section -->
-<div class="panel-box">
-  <h2>Harga Panel ArcZ</h2>
 <div class="container">  
     <button class="panel-button" data-command="1gb">Panel 1GB</button>  
     <button class="panel-button" data-command="2gb">Panel 2GB</button>  
@@ -171,14 +246,41 @@
     const popupCpu = document.getElementById('popupCpu');  
     const popupPrice = document.getElementById('popupPrice');  
     const popupTitle = document.getElementById('popupTitle');  
-</div>
-
-<script>
-  function toggleSidebar(show) {
-    document.getElementById('sidebar').classList.toggle('active', show);
-    document.getElementById('sidebarOverlay').classList.toggle('active', show);
-  }
-</script>
-
-</body>
+  
+    document.querySelectorAll('.panel-button').forEach(button => {  
+      button.addEventListener('click', () => {  
+        const command = button.dataset.command;  
+        let ram = "0", disknya = "0", cpu = "0", harga = "-";  
+  
+        if (command === "1gb") { ram = "1024"; disknya = "1024"; cpu = "30"; harga = "2K"; }  
+        else if (command === "2gb") { ram = "2048"; disknya = "2048"; cpu = "50"; harga = "3K"; }  
+        else if (command === "3gb") { ram = "3072"; disknya = "3072"; cpu = "70"; harga = "4K"; }  
+        else if (command === "4gb") { ram = "4096"; disknya = "4096"; cpu = "90"; harga = "5K"; }  
+        else if (command === "5gb") { ram = "5120"; disknya = "5120"; cpu = "110"; harga = "6K"; }  
+        else if (command === "6gb") { ram = "6144"; disknya = "6144"; cpu = "125"; harga = "7K"; }  
+        else if (command === "7gb") { ram = "7168"; disknya = "7168"; cpu = "150"; harga = "8K"; }  
+        else if (command === "8gb") { ram = "8192"; disknya = "8192"; cpu = "170"; harga = "9K"; }  
+        else if (command === "9gb") { ram = "9216"; disknya = "9216"; cpu = "180"; harga = "10K"; }  
+        else if (command === "10gb") { ram = "10240"; disknya = "10240"; cpu = "200"; harga = "11K"; }  
+        else if (command === "unlimited") { ram = "∞"; disknya = "∞"; cpu = "∞"; harga = "15K"; }  
+  
+        popupTitle.textContent = `Panel ${command.toUpperCase()}`;  
+        popupRam.textContent = ram;  
+        popupDisk.textContent = disknya;  
+        popupCpu.textContent = cpu;  
+        popupPrice.textContent = harga;  
+  
+        overlay.classList.add("active");  
+      });  
+    });  
+  
+    function closePopup() {  
+      overlay.classList.remove("active");  
+    }  
+  
+    function toggleSidebar(show) {  
+      document.getElementById('sidebar').classList.toggle('active', show);  
+      document.getElementById('sidebarOverlay').classList.toggle('active', show);  
+    }  
+  </script>  </body>  
 </html>
