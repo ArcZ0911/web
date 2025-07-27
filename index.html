@@ -140,15 +140,37 @@
 <!-- Panel Scroll Section -->
 <div class="panel-box">
   <h2>Harga Panel ArcZ</h2>
-  <button class="panel-btn">1 GB | 10K | 50% | 10GB</button>
-  <button class="panel-btn">2 GB | 15K | 60% | 20GB</button>
-  <button class="panel-btn">3 GB | 20K | 70% | 30GB</button>
-  <button class="panel-btn">4 GB | 30K | 80% | 40GB</button>
-  <button class="panel-btn">5 GB | 40K | 90% | 50GB</button>
-  <button class="panel-btn">6 GB | 50K | 100% | 60GB</button>
-  <button class="panel-btn">8 GB | 60K | 100% | 80GB</button>
-  <button class="panel-btn">10 GB | 70K | 100% | 100GB</button>
-  <button class="panel-btn">UNLI | 100K | 100% | UNLIMITED</button>
+<div class="container">  
+    <button class="panel-button" data-command="1gb">Panel 1GB</button>  
+    <button class="panel-button" data-command="2gb">Panel 2GB</button>  
+    <button class="panel-button" data-command="3gb">Panel 3GB</button>  
+    <button class="panel-button" data-command="4gb">Panel 4GB</button>  
+    <button class="panel-button" data-command="5gb">Panel 5GB</button>  
+    <button class="panel-button" data-command="6gb">Panel 6GB</button>  
+    <button class="panel-button" data-command="7gb">Panel 7GB</button>  
+    <button class="panel-button" data-command="8gb">Panel 8GB</button>  
+    <button class="panel-button" data-command="9gb">Panel 9GB</button>  
+    <button class="panel-button" data-command="10gb">Panel 10GB</button>  
+    <button class="panel-button" data-command="unlimited">Panel Unlimited</button>  
+  </div>    <div class="overlay" id="overlay">  
+    <div class="popup" id="popup">  
+      <h2 id="popupTitle">Panel</h2>  
+      <p><strong>RAM:</strong> <span id="popupRam"></span> MB</p>  
+      <p><strong>Disk:</strong> <span id="popupDisk"></span> MB</p>  
+      <p><strong>CPU:</strong> <span id="popupCpu"></span>%</p>  
+      <p><strong>Harga:</strong> <span id="popupPrice"></span></p>  
+      <button class="buy-button">Buy Panel</button>  
+    </div>  
+    <button class="close-btn" onclick="closePopup()">✕</button>  
+  </div>    <script>  
+    const popup = document.getElementById('popup');  
+    const overlay = document.getElementById('overlay');  
+  
+    const popupRam = document.getElementById('popupRam');  
+    const popupDisk = document.getElementById('popupDisk');  
+    const popupCpu = document.getElementById('popupCpu');  
+    const popupPrice = document.getElementById('popupPrice');  
+    const popupTitle = document.getElementById('popupTitle');  
 </div>
 
 <script>
