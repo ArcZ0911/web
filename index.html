@@ -10,6 +10,7 @@
       font-family: sans-serif;
       background: #121212;
       color: white;
+      overflow-x: hidden;
     }
 
     header {
@@ -24,90 +25,99 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
-    .menu-toggle {
+    .menu-icon {
       font-size: 1.5rem;
-      background: none;
-      border: none;
-      color: white;
       cursor: pointer;
     }
 
     .profile-pic {
-      width: 45px;
-      height: 45px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       object-fit: cover;
-      margin: 0 auto;
-    }
-
-    .profile-container {
-      flex: 1;
-      text-align: center;
-    }
-
-    .menu-drawer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 250px;
-      background: #1a1a1a;
-      padding: 2rem 1rem;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-      z-index: 100;
-    }
-
-    .menu-drawer.active {
-      transform: translateX(0);
-    }
-
-    .menu-drawer a {
-      display: block;
-      margin: 1rem 0;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
     }
 
     .container {
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 15px;
     }
 
     .panel-button {
       background: #2a2a2a;
       color: white;
       border: none;
-      padding: 1.5rem;
+      padding: 1.2rem;
       border-radius: 12px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-align: center;
+      font-size: 1.1rem;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
       cursor: pointer;
       transition: transform 0.2s, background 0.3s;
     }
 
     .panel-button:hover {
       background: #333;
-      transform: scale(1.02);
+      transform: scale(1.01);
+    }
+
+    .overlay, .sidebar {
+      position: fixed;
+      top: 0;
+      height: 100%;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar {
+      left: 0;
+      width: 250px;
+      background: #1e1e1e;
+      padding: 1.5rem;
+      transform: translateX(-100%);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.5rem;
+    }
+
+    .sidebar a, .buy-wa {
+      color: #00c853;
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+      margin-top: 0.5rem;
+    }
+
+    .buy-wa {
+      background: #00c853;
+      color: white;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 1rem;
     }
 
     .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
       visibility: hidden;
       opacity: 0;
-      transition: visibility 0s, opacity 0.3s ease;
     }
 
     .overlay.active {
@@ -121,16 +131,14 @@
       padding: 2rem;
       width: 90%;
       max-width: 400px;
-      transform: scale(0.5);
+      margin: auto;
+      margin-top: 10vh;
       animation: popupIn 0.3s forwards;
     }
 
     @keyframes popupIn {
-      to { transform: scale(1); }
-    }
-
-    .popup h2 {
-      margin-top: 0;
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     .close-btn {
@@ -144,7 +152,6 @@
       border-radius: 50%;
       font-size: 1rem;
       cursor: pointer;
-      z-index: 20;
     }
 
     .buy-button {
@@ -159,27 +166,22 @@
       font-size: 1rem;
       cursor: pointer;
     }
-
-    @media (min-width: 768px) {
-      .panel-button {
-        font-size: 1.3rem;
-        padding: 2rem;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <header>
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    <div class="profile-container">
-      <img src="https://example.com/profile.jpg" class="profile-pic" alt="Profile">
-    </div>
-  </header>
-
-  <div class="menu-drawer" id="drawer">
-    <a href="https://t.me/arcznewera" target="_blank">📩 Contact Owner</a>
+  <div class="sidebar" id="sidebar">
+    <h2>Contact Owner</h2>
+    <a href="https://wa.me/6281234567890" target="_blank">WhatsApp ArcZ</a>
+    <a href="https://t.me/arcznewera" target="_blank">Telegram ArcZ</a>
+    <button class="buy-wa">Beli WhatsApp</button>
   </div>
+  <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
+
+  <header>
+    <div class="menu-icon" onclick="toggleSidebar(true)">☰</div>
+    <img src="https://raw.githubusercontent.com/ArcZ0911/database/main/arczpfp.jpg" alt="profil" class="profile-pic" />
+  </header>
 
   <div class="container">
     <button class="panel-button" data-command="1gb">Panel 1GB</button>
@@ -208,12 +210,14 @@
   </div>
 
   <script>
+    const popup = document.getElementById('popup');
     const overlay = document.getElementById('overlay');
-    const popupTitle = document.getElementById('popupTitle');
+
     const popupRam = document.getElementById('popupRam');
     const popupDisk = document.getElementById('popupDisk');
     const popupCpu = document.getElementById('popupCpu');
     const popupPrice = document.getElementById('popupPrice');
+    const popupTitle = document.getElementById('popupTitle');
 
     document.querySelectorAll('.panel-button').forEach(button => {
       button.addEventListener('click', () => {
@@ -246,8 +250,9 @@
       overlay.classList.remove("active");
     }
 
-    function toggleMenu() {
-      document.getElementById('drawer').classList.toggle('active');
+    function toggleSidebar(show) {
+      document.getElementById('sidebar').classList.toggle('active', show);
+      document.getElementById('sidebarOverlay').classList.toggle('active', show);
     }
   </script>
 </body>
